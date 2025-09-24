@@ -37,7 +37,7 @@ case "$(uname -m)" in
         ;;
 esac
 
-TMUX_BIN="tmux.${OS}-${ARCH}"
+TMUX_BIN="tmux.${OS}-$(arch)"
 
 ######################################
 ###### BEGIN VERSION DEFINITION ######
@@ -473,13 +473,11 @@ echo "Standard tmux binary:   ${TMUX_STATIC_HOME}/bin/${TMUX_BIN}.gz"
 # echo "Stripped tmux binary:   ${TMUX_STATIC_HOME}/bin/${TMUX_BIN}.stripped.gz"
 
 gzip ${TMUX_STATIC_HOME}/bin/${TMUX_BIN}
-mv ${TMUX_STATIC_HOME}/bin/${TMUX_BIN}.gz ${TMUX_STATIC_HOME}/bin/${TMUX_BIN}.$(arch).gz
 # gzip ${TMUX_STATIC_HOME}/bin/${TMUX_BIN}.stripped
 
 if [ -n "${USE_UPX}" ] && [ ${USE_UPX} = 1 ]; then
     echo "Compressed tmux binary: ${TMUX_STATIC_HOME}/bin/${TMUX_BIN}.upx.gz"
 	gzip ${TMUX_STATIC_HOME}/bin/${TMUX_BIN}.upx
-	mv ${TMUX_STATIC_HOME}/bin/${TMUX_BIN}.upx.gz ${TMUX_STATIC_HOME}/bin/${TMUX_BIN}.upx.$(arch).gz
 fi
 
 echo ""
