@@ -37,7 +37,7 @@ case "$(uname -m)" in
         ;;
 esac
 
-TMUX_BIN="tmux.${OS}-$(arch)"
+TMUX_BIN="tmux.${OS}-${ARCH}"
 
 ######################################
 ###### BEGIN VERSION DEFINITION ######

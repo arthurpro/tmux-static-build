@@ -11,4 +11,4 @@ A script or building a static tmux for linux which should run on a wide selectio
 Binaries available in releases.
 Build with GitHub actions (Ubuntu 22.04, amd64, arm64)
 
-![Build Status](https://github.com/mjakob-gh/build-static-tmux/actions/workflows/build.yml/badge.svg)
+![Build Status](https://github.com/arthurpro/tmux-static-build/actions/workflows/build.yml/badge.svg)
