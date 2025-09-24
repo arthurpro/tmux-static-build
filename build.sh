@@ -436,9 +436,7 @@ cd ${TMUX_STATIC_HOME} || exit 1
 
 # strip text from binary
 cp ${TMUX_STATIC_HOME}/bin/tmux ${TMUX_STATIC_HOME}/bin/${TMUX_BIN}
-# cp ${TMUX_STATIC_HOME}/bin/${TMUX_BIN} ${TMUX_STATIC_HOME}/bin/${TMUX_BIN}.stripped
 printf "Stripping....."
-# strip ${TMUX_STATIC_HOME}/bin/${TMUX_BIN}.stripped
 strip -s ${TMUX_STATIC_HOME}/bin/${TMUX_BIN}
 checkResult $?
 
@@ -459,7 +457,6 @@ if [ -n "${USE_UPX}" ] && [ ${USE_UPX} = 1 ]; then
     mv upx ${TMUX_STATIC_HOME}/bin/
 
     # compress binary with upx
-    # cp ${TMUX_STATIC_HOME}/bin/${TMUX_BIN}.stripped ${TMUX_STATIC_HOME}/bin/${TMUX_BIN}.upx
     cp ${TMUX_STATIC_HOME}/bin/${TMUX_BIN} ${TMUX_STATIC_HOME}/bin/${TMUX_BIN}.upx
     printf "Compressing..."
     ${TMUX_STATIC_HOME}/bin/upx -q --best --ultra-brute ${TMUX_STATIC_HOME}/bin/${TMUX_BIN}.upx >> ${LOG_DIR}/${LOG_FILE} 2>&1
@@ -470,10 +467,8 @@ echo ""
 echo "Resulting files:"
 echo "----------------"
 echo "Standard tmux binary:   ${TMUX_STATIC_HOME}/bin/${TMUX_BIN}.gz"
-# echo "Stripped tmux binary:   ${TMUX_STATIC_HOME}/bin/${TMUX_BIN}.stripped.gz"
 
 gzip ${TMUX_STATIC_HOME}/bin/${TMUX_BIN}
-# gzip ${TMUX_STATIC_HOME}/bin/${TMUX_BIN}.stripped
 
 if [ -n "${USE_UPX}" ] && [ ${USE_UPX} = 1 ]; then
     echo "Compressed tmux binary: ${TMUX_STATIC_HOME}/bin/${TMUX_BIN}.upx.gz"
