@@ -24,7 +24,7 @@ LOG_LINES=50
 OS=$(uname -s | tr '[:upper:]' '[:lower:]')
 
 # sigh, in linux some use "x86_64", "aarch64"
-# and others "amd64" or "arm64" the upx developers 
+# and others "amd64" or "arm64" the upx developers
 case "$(uname -m)" in
     "aarch64")
         ARCH="arm64"
@@ -436,9 +436,10 @@ cd ${TMUX_STATIC_HOME} || exit 1
 
 # strip text from binary
 cp ${TMUX_STATIC_HOME}/bin/tmux ${TMUX_STATIC_HOME}/bin/${TMUX_BIN}
-cp ${TMUX_STATIC_HOME}/bin/${TMUX_BIN} ${TMUX_STATIC_HOME}/bin/${TMUX_BIN}.stripped
+# cp ${TMUX_STATIC_HOME}/bin/${TMUX_BIN} ${TMUX_STATIC_HOME}/bin/${TMUX_BIN}.stripped
 printf "Stripping....."
-strip ${TMUX_STATIC_HOME}/bin/${TMUX_BIN}.stripped
+# strip ${TMUX_STATIC_HOME}/bin/${TMUX_BIN}.stripped
+strip -s ${TMUX_STATIC_HOME}/bin/${TMUX_BIN}
 checkResult $?
 
 # compress with upx, when choosen
@@ -458,7 +459,8 @@ if [ -n "${USE_UPX}" ] && [ ${USE_UPX} = 1 ]; then
     mv upx ${TMUX_STATIC_HOME}/bin/
 
     # compress binary with upx
-    cp ${TMUX_STATIC_HOME}/bin/${TMUX_BIN}.stripped ${TMUX_STATIC_HOME}/bin/${TMUX_BIN}.upx
+    # cp ${TMUX_STATIC_HOME}/bin/${TMUX_BIN}.stripped ${TMUX_STATIC_HOME}/bin/${TMUX_BIN}.upx
+    cp ${TMUX_STATIC_HOME}/bin/${TMUX_BIN} ${TMUX_STATIC_HOME}/bin/${TMUX_BIN}.upx
     printf "Compressing..."
     ${TMUX_STATIC_HOME}/bin/upx -q --best --ultra-brute ${TMUX_STATIC_HOME}/bin/${TMUX_BIN}.upx >> ${LOG_DIR}/${LOG_FILE} 2>&1
     checkResult $?
@@ -468,14 +470,16 @@ echo ""
 echo "Resulting files:"
 echo "----------------"
 echo "Standard tmux binary:   ${TMUX_STATIC_HOME}/bin/${TMUX_BIN}.gz"
-echo "Stripped tmux binary:   ${TMUX_STATIC_HOME}/bin/${TMUX_BIN}.stripped.gz"
+# echo "Stripped tmux binary:   ${TMUX_STATIC_HOME}/bin/${TMUX_BIN}.stripped.gz"
 
 gzip ${TMUX_STATIC_HOME}/bin/${TMUX_BIN}
-gzip ${TMUX_STATIC_HOME}/bin/${TMUX_BIN}.stripped
+mv ${TMUX_STATIC_HOME}/bin/${TMUX_BIN}.gz ${TMUX_STATIC_HOME}/bin/${TMUX_BIN}.$(arch).gz
+# gzip ${TMUX_STATIC_HOME}/bin/${TMUX_BIN}.stripped
 
 if [ -n "${USE_UPX}" ] && [ ${USE_UPX} = 1 ]; then
     echo "Compressed tmux binary: ${TMUX_STATIC_HOME}/bin/${TMUX_BIN}.upx.gz"
 	gzip ${TMUX_STATIC_HOME}/bin/${TMUX_BIN}.upx
+	mv ${TMUX_STATIC_HOME}/bin/${TMUX_BIN}.upx.gz ${TMUX_STATIC_HOME}/bin/${TMUX_BIN}.upx.$(arch).gz
 fi
 
 echo ""
