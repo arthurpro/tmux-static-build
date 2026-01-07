@@ -15,7 +15,7 @@ COLOR_END="\033[0m"
 PGM="${0##*/}" # Program basename
 
 # Scriptversion
-VERSION=3.5d
+VERSION=3.6a
 
 # How many lines of the error log should be displayed
 LOG_LINES=50
